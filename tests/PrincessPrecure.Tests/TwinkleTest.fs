@@ -21,6 +21,16 @@ module TwinkleTest =
     do! assertEquals "'λ'" (hamming '\u03bb')
   }
 
+  let ``print int`` = test {
+    do! assertEquals "1" (hamming 1)
+    do! assertEquals "-1" (hamming -1)
+  }
+
+  let ``print int64`` = test {
+    do! assertEquals "9223372036854775807" (hamming Int64.MaxValue)
+    do! assertEquals "-9223372036854775808" (hamming Int64.MinValue)
+  }
+
   let ``print float32`` = test {
     do! assertEquals "1" (hamming 1.f)
     do! assertEquals "1.111111" (hamming 1.111111f)
