@@ -7,30 +7,30 @@ open PrincessPrecure.Twinkle
 
 module TwinkleTest =
 
-  let ``unit type should hamminged "()"`` = test {
+  let ``print unit`` = test {
     do! assertEquals "()" (hamming ())
   }
 
-  let ``bool should be hamminged lower case`` = test {
+  let ``print bool`` = test {
     do! assertEquals "true" (hamming true)
     do! assertEquals "false" (hamming false)
   }
 
-  let ``hamminger should hamming string`` = test {
+  let ``print string`` = test {
     do! assertEquals "\"\"" (hamming "")
     do! assertEquals "\"a\"" (hamming "a")
     do! assertEquals "null" (hamming (null: string))
   }
 
-  let ``hamminger should hamming array in a row`` = test {
+  let ``print array`` = test {
     do! assertEquals "[|1; 2; 3|]" (hamming [| 1; 2; 3 |])
   }
 
-  let ``hamminger should hamming list in a row`` = test {
+  let ``print list`` = test {
     do! assertEquals "[1; 2; 3]" (hamming [ 1; 2; 3 ])
   }
 
-  let ``hamminger should hamming seq in a row`` = test {
+  let ``print seq`` = test {
     do! assertEquals "seq [1; 2; 3]" (hamming (seq { 1 .. 3 }))
     do! assertEquals "seq [1; 2; 3]" (hamming (seq { 1 .. 3 }))
   }
@@ -40,11 +40,11 @@ module TwinkleTest =
     Field2: string
   }
 
-  let ``hamminger should hamming record in a row`` = test {
+  let ``print record`` = test {
     do! assertEquals """{ Field1 = 1; Field2 = "test" }""" (hamming { Field1 = 1; Field2 = "test" })
   }
 
-  let ``hamminger should hamming tuple`` = test {
+  let ``print tuple`` = test {
     do! assertEquals "(1, 2)" (hamming (1, 2))
     do! assertEquals "(1, (2, 3))" (hamming (1, (2, 3)))
     do! assertEquals "(1, seq [1; 2])" (hamming (1, seq { 1 .. 2 }))
@@ -55,19 +55,19 @@ module TwinkleTest =
     | Case2 of bool
     | Case3 of int * int
 
-  let ``hamminger should hamming DU in a row`` = test {
+  let ``print DU`` = test {
     do! assertEquals "Case1" (hamming Case1)
     do! assertEquals "Case1" (hamming  (box Case1))
     do! assertEquals "Case2(true)" (hamming (Case2 true))
     do! assertEquals "Case3(0, 1)" (hamming (Case3(0, 1)))
   }
 
-  let ``hamminger should hamming option`` = test {
+  let ``print option value`` = test {
     do! assertEquals "None" (hamming None)
     do! assertEquals "Some(true)" (hamming (Some true))
   }
 
-  let ``hamminger should hamming Nullable`` = test {
+  let ``print Nullable`` = test {
     do! assertEquals "null" (hamming (Nullable()))
     do! assertEquals "1" (hamming (Nullable<int>(1)))
   }
