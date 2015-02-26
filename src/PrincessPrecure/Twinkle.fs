@@ -45,6 +45,12 @@ let rec internal printImpl (t: Type, o: obj) =
       match o with
       | :? bool as o -> sprintf "%b" o
       | :? char as o -> sprintf "'%c'" o
+      | :? float32 as o ->
+        if Single.IsNaN(o) then string o
+        else o.ToString()
+      | :? float as o ->
+        if Double.IsNaN(o) then string o
+        else o.ToString()
       | :? string as o -> sprintf "\"%s\"" o
       | :? IEnumerable as o ->
         let tmp = ResizeArray()

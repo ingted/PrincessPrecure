@@ -21,6 +21,20 @@ module TwinkleTest =
     do! assertEquals "'λ'" (hamming '\u03bb')
   }
 
+  let ``print float32`` = test {
+    do! assertEquals "1" (hamming 1.f)
+    do! assertEquals "1.111111" (hamming 1.111111f)
+    do! assertEquals "NaN" (hamming Single.NaN)
+    do! assertEquals "+∞" (hamming Single.PositiveInfinity)
+  }
+
+  let ``print float`` = test {
+    do! assertEquals "1" (hamming 1.)
+    do! assertEquals "1.1111111" (hamming 1.1111111)
+    do! assertEquals "NaN" (hamming Double.NaN)
+    do! assertEquals "+∞" (hamming Double.PositiveInfinity)
+  }
+
   let ``print string`` = test {
     do! assertEquals "\"\"" (hamming "")
     do! assertEquals "\"a\"" (hamming "a")
