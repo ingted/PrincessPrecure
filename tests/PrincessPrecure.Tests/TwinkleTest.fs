@@ -16,6 +16,11 @@ module TwinkleTest =
     do! assertEquals "false" (hamming false)
   }
 
+  let ``print char`` = test {
+    do! assertEquals "'a'" (hamming 'a')
+    do! assertEquals "'λ'" (hamming '\u03bb')
+  }
+
   let ``print string`` = test {
     do! assertEquals "\"\"" (hamming "")
     do! assertEquals "\"a\"" (hamming "a")

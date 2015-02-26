@@ -44,6 +44,7 @@ let rec internal printImpl (t: Type, o: obj) =
     else
       match o with
       | :? bool as o -> sprintf "%b" o
+      | :? char as o -> sprintf "'%c'" o
       | :? string as o -> sprintf "\"%s\"" o
       | :? IEnumerable as o ->
         let tmp = ResizeArray()
