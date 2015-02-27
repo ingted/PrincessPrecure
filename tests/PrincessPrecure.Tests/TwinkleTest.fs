@@ -101,3 +101,21 @@ module TwinkleTest =
     do! assertEquals "null" (hamming (Nullable()))
     do! assertEquals "1" (hamming (Nullable<int>(1)))
   }
+
+  [<StructuredFormatDisplay("{Display}")>]
+  type FormattedType1() =
+    member __.Display = "FormattedType instance"
+
+  [<StructuredFormatDisplay("FormattedType2.{Display}")>]
+  type FormattedType2() =
+    member __.Display = "Instance"
+
+  [<StructuredFormatDisplay("{Display}.Instance")>]
+  type FormattedType3() =
+    member __.Display = "FormattedType3"
+
+  let ``print StructuredFormatDisplay`` = test {
+    do! assertEquals "FormattedType instance" (hamming (FormattedType1()))
+    do! assertEquals "FormattedType2.Instance" (hamming (FormattedType2()))
+    do! assertEquals "FormattedType3.Instance" (hamming (FormattedType3()))
+  }
