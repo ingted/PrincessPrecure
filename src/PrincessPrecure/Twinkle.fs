@@ -36,6 +36,16 @@ let rec internal printImpl (t: Type, o: obj) =
     if t.Name = "Unit" then "()"
     elif t.FullName.StartsWith("Microsoft.FSharp.Core.FSharpOption`1") then "None"
     else "null"
+  | :? bool as o -> sprintf "%b" o
+  | :? char as o -> sprintf "'%c'" o
+  | :? float32 as o ->
+    if Single.IsNaN(o) then string o
+    else o.ToString()
+  | :? float as o ->
+    if Double.IsNaN(o) then string o
+    else o.ToString()
+  | :? string as o -> sprintf "\"%s\"" o
+  | StructuredFormatDisplay s -> s
   | _ ->
     let t = o.GetType()
     if FSharpType.IsRecord t then
@@ -68,21 +78,11 @@ let rec internal printImpl (t: Type, o: obj) =
       |> sprintf "(%s)"
     else
       match o with
-      | :? bool as o -> sprintf "%b" o
-      | :? char as o -> sprintf "'%c'" o
-      | :? float32 as o ->
-        if Single.IsNaN(o) then string o
-        else o.ToString()
-      | :? float as o ->
-        if Double.IsNaN(o) then string o
-        else o.ToString()
-      | :? string as o -> sprintf "\"%s\"" o
       | :? IEnumerable as o ->
         let tmp = ResizeArray()
         let t = t.GetElementType()
         for x in o do tmp.Add(printImpl (t, x))
         tmp |> String.concat "; " |> sprintf "seq [%s]"
-      | StructuredFormatDisplay s -> s
       | _ -> string o
 
 let hamming (t: 'T) = printImpl (typeof<'T>, t)
